@@ -6,15 +6,12 @@ spec:
   appinfo: 
     appns: default
     applabel: "app=nginx"
+    appkind: deployment
+  chaosServiceAccount: nginx
   experiments:
     - name: pod-delete 
       spec:
-        rank: 1
+        components: 
     - name: container-kill
       spec:
-        rank: 2 
-  schedule:
-    interval: ""
-    excludedTimes: ""
-    excludedDays: ""
-    concurrencyPolicy: "" 
+        components: 
