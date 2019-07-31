@@ -46,7 +46,7 @@ chaos-charts/litmus     0.1.0           1.0             A Helm chart to install 
 
 ### Install Litmus Infra Components 
 
-- This step performs the Litmus RBAC setup & applies the chaosresults & litmusresults CRDs. 
+- This step performs the Litmus RBAC setup, deploys the chaos operator & installs the required CRDs. 
 
 *Note: Ensure that the namespace selected is "litmus"* 
 
@@ -129,7 +129,7 @@ deployment.extensions/nginx-deployment annotated
 ```
 ### Create a chaos service account in the application's namespace
 
-- This is the service account that will be used by the chaos executor. The permissions can be set on the basis of chaos/as desired
+- This is the service account that will be used by the chaos executor. The permissions can be set on the basis of chaos desired
   by the users. 
 
   ```
@@ -158,6 +158,8 @@ pod-delete      0s
 ### Examine the experiment CRs to view the chaos params
 
 - Use `kubectl get chaosexperiment <name> -o yaml` to view the CRs. Below snippets are formatted for readability
+
+  *Note: The tunables in the experiments such as LIB, KILL_MODE are placeholders and are WIP* 
 
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -362,4 +364,4 @@ service/prometheus-service created
 - Access the prometheus dashboard by accesing the *nodeIP:30000* from your browser & execute the prom queries to see the
   chaos metrics graphs
 
-  ![chaos-metrics](/feature-demos/chaos-operator-workflow/images/chaos-metrics.jpg)
+  ![chaos-metrics](/feature-demos/chaos-operator-workflow/images/chaos-metrics-prometheus.jpg)
