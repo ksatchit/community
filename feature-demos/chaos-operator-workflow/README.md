@@ -168,6 +168,7 @@ description:
     Deletes a pod belonging to a deployment/statefulset/daemonset
 kind: ChaosExperiment
 metadata:
+  labels:
     litmuschaos.io/name: kubernetes
   name: pod-delete
   namespace: default
@@ -231,7 +232,7 @@ spec:
 
 - This is a user-facing CR which lists experiments to be performed.
 
-```
+```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
@@ -315,7 +316,7 @@ pumba-rkx62                         1/1     Running     0          15s
 *Note: It is recommended to keep another terminal with a watch created on the app & litmus pods 
 to see the experiments in progress*
 
-```
+```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosResult
 metadata:
@@ -325,8 +326,9 @@ spec:
   experimentstatus:
     phase: null
     verdict: pass
+```
 
-root@chaos-go:~# kubectl get chaosresult engine-nginx-container-kill -o yaml 
+```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosResult
 metadata:
