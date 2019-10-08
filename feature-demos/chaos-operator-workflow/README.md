@@ -3,46 +3,10 @@
 ## Pre-Requisites
 
 - Ensure you are in the admin context in order to setup RBAC for the various components involved in the demo
-- Ensure you have setup Helm (with Tiller) on your Kubernetes Cluster. If not already installed, please follow
-  the steps at: https://github.com/litmuschaos/chaos-charts/blob/master/README.md
-- Ensure remove any prior instance of litmuschaos CRDs (chaosengine, chaosexperiment, chaosreults, litmusresults) 
-  if installed. Else, they may cause some of the helm commands listed below to fail. However, a re-run of the
-  failed commands should still work
 
 *Note: This demo steps were carried out on GKE (v1.12.6-gke.10) platform*
 
 ## Demo Steps
-
-### Setup the Litmuschaos Helm Repository
-
-- Add the remote helm repository for Litmuschaos
-
-```
-root@chaos-go:~# helm repo add chaos-charts https://litmuschaos.github.io/chaos-charts
-"chaos-charts" has been added to your repositories
-```
-
-- Ensure that the helm repository is successfully added & is the latest
-
-```
-root@chaos-go:~# helm repo list
-NAME            URL                                             
-stable          https://kubernetes-charts.storage.googleapis.com
-local           http://127.0.0.1:8879/charts                    
-chaos-charts    https://litmuschaos.github.io/chaos-charts     
-
-root@chaos-go:~# helm repo update chaos-charts
-Hang tight while we grab the latest from your chart repositories...
-...Skip local chart repository
-...Successfully got an update from the "chaos-charts" chart repository
-...Successfully got an update from the "stable" chart repository
-Update Complete.
-
-root@chaos-go:~# helm search chaos-charts
-NAME                    CHART VERSION   APP VERSION     DESCRIPTION                                                 
-chaos-charts/kubernetes 0.1.0           1.0             Helm chart for Litmus Kubernetes Chaos Experiments          
-chaos-charts/litmus     0.1.0           1.0             A Helm chart to install litmus infra components on Kubern..
-```
 
 ### Install Litmus Infra Components 
 
@@ -51,32 +15,16 @@ chaos-charts/litmus     0.1.0           1.0             A Helm chart to install 
 *Note: Ensure that the namespace selected is "litmus"* 
 
 ```
-root@chaos-go:~# helm install chaos-charts/litmus --namespace=litmus 
-NAME:   amber-hydra
-LAST DEPLOYED: Wed Jul 31 03:10:24 2019
-NAMESPACE: litmus
-STATUS: DEPLOYED
+root@chaos-go:~# root@chaos-go:~# kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-latest.yaml
 
-RESOURCES:
-==> v1/Deployment
-NAME    READY  UP-TO-DATE  AVAILABLE  AGE
-litmus  0/1    1           0          1s
-
-==> v1/Pod(related)
-NAME                     READY  STATUS             RESTARTS  AGE
-litmus-5bd7fc9885-x8n9c  0/1    ContainerCreating  0         0s
-
-==> v1/ServiceAccount
-NAME    SECRETS  AGE
-litmus  1        1s
-
-==> v1beta1/ClusterRole
-NAME    AGE
-litmus  1s
-
-==> v1beta1/ClusterRoleBinding
-NAME    AGE
-litmus  1s
+namespace/litmus created
+serviceaccount/litmus created
+clusterrole.rbac.authorization.k8s.io/litmus created
+clusterrolebinding.rbac.authorization.k8s.io/litmus created
+deployment.apps/chaos-operator-ce created
+customresourcedefinition.apiextensions.k8s.io/chaosengines.litmuschaos.io created
+customresourcedefinition.apiextensions.k8s.io/chaosexperiments.litmuschaos.io created
+customresourcedefinition.apiextensions.k8s.io/chaosresults.litmuschaos.io created
 ```
 
 - Verify that the litmus service account, clusterrole, clusterrolebinding, litmus chaos operator deployment & litmuschaos CRDs are applied
@@ -101,10 +49,9 @@ NAME     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 litmus   1         1         1            1           4m5s
 root@chaos-go:~# 
 
-root@chaos-go:~# kubectl get pods -n litmus 
-NAME                      READY   STATUS    RESTARTS   AGE
-litmus-5bd7fc9885-x8n9c   1/1     Running   0          3m35s
-root@chaos-go:~#
+oot@chaos-go:~# kubectl get pods -n litmus 
+NAME                                 READY   STATUS    RESTARTS   AGE
+chaos-operator-ce-777fdfcf5f-hv5xz   1/1     Running   0          49s
 ```
 
 ### Install an example application deployment
@@ -139,20 +86,14 @@ deployment.extensions/nginx-deployment annotated
   rolebinding.rbac.authorization.k8s.io/nginx created
   ```
 
-### Install the kubernetes chaos chart to install the experiment CRs 
+### Install the genric (kubernetes) chaos chart to install the experiment CRs 
 
 ```
-root@chaos-go:~# helm install chaos-charts/kubernetes
-NAME:   mangy-warthog
-LAST DEPLOYED: Wed Jul 31 03:20:48 2019
-NAMESPACE: default
-STATUS: DEPLOYED
+root@chaos-go:~#  kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml -n litmus
 
-RESOURCES:
-==> v1alpha1/ChaosExperiment
-NAME            AGE
-container-kill  0s
-pod-delete      0s
+chaosexperiment.litmuschaos.io/container-kill created
+chaosexperiment.litmuschaos.io/pod-delete created
+chaosexperiment.litmuschaos.io/pod-network-delay created
 ```
 
 ### Examine the experiment CRs to view the chaos params
@@ -278,8 +219,7 @@ kubernetes             ClusterIP   10.86.0.1      <none>        443/TCP    179m
 
 ### View execution of chaos experiments 
 
-- In this demo, the a pod-delete experiment is executed followed by a container-kill experiment. These make use 
-  of chaoskube & pumba respectively as the end-injectors of chaos. 
+- In this demo, the a pod-delete experiment is executed followed by a container-kill experiment. 
 
   *Note: The duration of these tests are kept at a minimum. It is recommended to keep another terminal with a watch 
    created on the app & litmus pods to see the experiments in progress*
@@ -287,8 +227,7 @@ kubernetes             ClusterIP   10.86.0.1      <none>        443/TCP    179m
 ```
 Every 1.0s: kubectl get pods                                                                                                                
 
-NAME                                READY   STATUS        RESTARTS   AGE
-chaoskube-54d87b49dc-zwppr          1/1     Running       0          14s
+NAME                                READY   STATUS        RESTARTS   AGE         1/1     Running       0          14s
 engine-nginx-runner                 2/2     Running       0          35s
 nginx-deployment-5c689d88bb-cd7x5   1/1     Running       0          2s
 nginx-deployment-5c689d88bb-g4qjn   1/1     Running       1          3m26s
