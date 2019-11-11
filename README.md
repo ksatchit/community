@@ -3,7 +3,7 @@ Repository that stores all community content, demo steps, meeting minutes &amp; 
 
 ## Weekly Sync Up Meeting
 
-Held every Tuesday 16:30 IST / 12:30 CEST
+Held every Tuesday 17:30 IST / 13:30 CEST
 
 Meeting Resources: 
 
