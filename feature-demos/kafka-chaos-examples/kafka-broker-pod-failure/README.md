@@ -7,7 +7,7 @@
   Ensure that you have installed OpenEBS on the cluster. For steps to do this, refer the [OpenEBS quickstart guide](https://docs.openebs.io/docs/next/quickstart.html)
 - We shall use customized confluent kafka helm charts to install the kafka cluster. Ensure that helm/tiller is already configured. For steps to do this, refer [Installing Helm](https://helm.sh/docs/intro/install/)
 
-- If you are using KUDO Kafka operator to setup the Kafka cluster, refer: [Setup kafka via KUDO operator](https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kudo/README.md)
+- If you are using KUDO Kafka operator to setup the Kafka cluster, refer: [Setup kafka via KUDO operator](https://github.com/litmuschaos/community/blob/master/feature-demos/kafka-chaos-examples/kudo/README.md)
 
 ## Demo-Steps
 
