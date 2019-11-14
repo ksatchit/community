@@ -7,7 +7,7 @@ metadata:
 spec:
   appinfo: 
     appns: default
-    applabel: 'app=cp-kafka'
+    applabel: 'app=kafka'
     appkind: statefulset
   chaosServiceAccount: kafka-sa
   jobCleanUpPolicy: delete
@@ -22,14 +22,14 @@ spec:
 
           # get via "kubectl get pods --show-labels -n <kafka-namespace>"
           - name: KAFKA_LABEL
-            value: 'app=cp-kafka'
+            value: 'app=kafka'
 
           - name: KAFKA_NAMESPACE
             value: 'default'
      
           # get via "kubectl get svc -n <kafka-namespace>" 
           - name: KAFKA_SERVICE
-            value: 'kafka-cp-kafka-headless'
+            value: 'kafka-svc'
 
           # get via "kubectl get svc -n <kafka-namespace>  
           - name: KAFKA_PORT
@@ -37,18 +37,18 @@ spec:
 
           # ensure to set the instance name if using KUDO operator
           - name: KAFKA_INSTANCE_NAME
-            value: ''
+            value: 'kafka'
             
           - name: ZOOKEEPER_NAMESPACE
             value: 'default'
 
           # get via "kubectl get pods --show-labels -n <zk-namespace>"
           - name: ZOOKEEPER_LABEL
-            value: 'app=cp-zookeeper'
+            value: 'app=zookeeper'
 
           # get via "kubectl get svc -n <zk-namespace>  
           - name: ZOOKEEPER_SERVICE
-            value: 'kafka-cp-zookeeper-headless'
+            value: 'zookeeper-instance-hs'
 
           # get via "kubectl get svc -n <zk-namespace>  
           - name: ZOOKEEPER_PORT

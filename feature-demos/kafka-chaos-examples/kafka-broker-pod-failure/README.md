@@ -148,15 +148,17 @@ spec:
             value: '30'
 ``` 
 
-Note: Ensure to set the instance name if using KUDO operator (this is needed to construct the correct zookeeper URI)
+Note: If you have setup kafka cluster using KUDO operator, ensure to set the instance name (this is needed to construct the correct zookeeper URI).
 
 ### Step-7: Launch chaos experiment and verify behaviour
 
 - Create the ChaosEngine CR to trigger the chaos experiment
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine.yaml
+  kubectl apply -f https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-confluent.yaml
   ```
+
+Note: If you have setup kafka cluster using KUDO operator then refer: [chaosengine-kudo.yaml](https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-kudo.yaml)
 
 - Watch the pods on the app (default) namespace. Look out for the following:
 
@@ -194,7 +196,7 @@ Note: Ensure to set the instance name if using KUDO operator (this is needed to 
 
 
   ```
-  kubectl delete -f https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine.yaml
+  kubectl delete -f https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-confluent.yaml
   ```
 
 ### Step-10: Optional/Additional Modes for the Kafka Broker Failure Experiment
