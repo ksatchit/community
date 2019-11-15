@@ -50,9 +50,10 @@ spec:
           - name: ZOOKEEPER_PORT
             value: '2181'
 
-          # get via "kubectl get svc -n <zk-namespace>  
+          # set chaos duration (in sec) as desired
           - name: TOTAL_CHAOS_DURATION
-            value: '40'
+            value: '60'
 
+          # set chaos interval (in sec) as desired
           - name: CHAOS_INTERVAL
-            value: '10'
+            value: '20'
