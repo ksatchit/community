@@ -35,6 +35,10 @@ spec:
           - name: KAFKA_PORT
             value: '9092'
 
+          # in milliseconds  
+          - name: KAFKA_CONSUMER_TIMEOUT
+            value: '70000'
+
           - name: ZOOKEEPER_NAMESPACE
             value: 'default'
 

@@ -124,6 +124,10 @@ spec:
           - name: KAFKA_PORT
             value: '9092'
 
+          # in milliseconds  
+          - name: KAFKA_CONSUMER_TIMEOUT
+            value: '70000'
+
           # ensure to set the instance name if using KUDO operator
           - name: KAFKA_INSTANCE_NAME
             value: ''
