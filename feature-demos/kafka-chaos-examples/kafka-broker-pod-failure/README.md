@@ -145,7 +145,11 @@ spec:
 
           # set chaos duration (in sec) as desired
           - name: TOTAL_CHAOS_DURATION
-            value: '30'
+            value: '60'
+            
+          # set chaos interval (in sec) as desired
+          - name: CHAOS_INTERVAL
+            value: '20'
 ``` 
 
 Note: If you have setup kafka cluster using KUDO operator, ensure to set the instance name (this is needed to construct the correct zookeeper URI).
