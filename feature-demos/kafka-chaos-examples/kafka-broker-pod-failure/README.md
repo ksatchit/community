@@ -7,13 +7,14 @@
   Ensure that you have installed OpenEBS on the cluster. For steps to do this, refer the [OpenEBS quickstart guide](https://docs.openebs.io/docs/next/quickstart.html)
 - We shall use customized confluent kafka helm charts to install the kafka cluster. Ensure that helm/tiller is already configured. For steps to do this, refer [Installing Helm](https://helm.sh/docs/intro/install/)
 
-- If you are using KUDO Kafka operator to setup the Kafka cluster, refer: [Setup kafka via KUDO operator](https://github.com/litmuschaos/community/blob/master/feature-demos/kafka-chaos-examples/kudo/README.md)
+- If you would like to use the KUDO operator to setup the Kafka cluster, refer: [Setup kafka via KUDO operator](https://github.com/litmuschaos/community/blob/master/feature-demos/kafka-chaos-examples/kudo/README.md)
 
 ## Demo-Steps
 
 Notes: 
  - These steps were performed on a Konvoy cluster created on AWS
  - In case you would like to use a different persistent storage type, please update the values.yml with appropriate storage class in zookeeper and kafka sections
+ - If you have setup Kafka using the KUDO operator, start from Step-2
 
 ### Step-1: Install Kafka Cluster 
 
@@ -85,7 +86,7 @@ Notes:
 
 - Provide the application (kafka, zookeeper) info in the ChaosEngine spec and other tunables as experiment ENV (overrides defaults in chaosexperiment CR)
 
-  A sample ChaosEngine, to kill the leader broker for a partition of a simple kafka topic (with an active message stream) is provided below. 
+  A sample ChaosEngine spec to kill the leader broker for a partition of a simple kafka topic (with an active message stream) is provided below. 
 
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -160,8 +161,6 @@ spec:
             value: "false"
 ``` 
 
-Note: If you have setup kafka cluster using KUDO operator, ensure to set the instance name (this is needed to construct the correct zookeeper URI).
-
 ### Step-7: Launch chaos experiment and verify behaviour
 
 - Create the ChaosEngine CR to trigger the chaos experiment
@@ -170,7 +169,11 @@ Note: If you have setup kafka cluster using KUDO operator, ensure to set the ins
   kubectl apply -f https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-confluent.yaml
   ```
 
-Note: If you have setup kafka cluster using KUDO operator then refer: [chaosengine-kudo.yaml](https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-kudo.yaml)
+**Note**: If you have setup kafka cluster using KUDO operator then refer: [chaosengine-kudo.yaml](https://raw.githubusercontent.com/litmuschaos/community/master/feature-demos/kafka-chaos-examples/kafka-broker-pod-failure/chaosengine-kudo.yaml)
+
+  - Ensure to set the KAFKA_INSTANCE_NAME (the value provided to the `--instance` flag during `kubectl kudo install` step (this is needed to construct the correct zookeeper URI)
+  - Provide an appropriate KAFKA_CONSUMER_TIMEOUT based on the infrastructure used. The default value is 30s (provided as 30000ms) and is seen to work with AWS-based Konvoy clusters  
+     
 
 - Watch the pods on the app (default) namespace. Look out for the following:
 
