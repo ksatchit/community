@@ -2,6 +2,15 @@
 
 Notes: 
  - These steps were performed on a Konvoy cluster created on AWS
+ - In this demo, we will use OpenEBS LocalPVs as the persistent storage for the kafka broker and zookeeper clusters.
+   Ensure that you have installed OpenEBS on the cluster. For steps to do this, refer the [OpenEBS quickstart guide](https://docs.openebs.io/docs/next/quickstart.html)
+
+   A quick step to install the OpenEBS control plane, default storage class & NDM amongst other components is provided below: 
+
+   ```
+   kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.4.0.yaml
+
+   ```
 
 ## Pre-requisites
 
@@ -41,10 +50,10 @@ kubectl kudo init
 kubectl kudo install zookeeper --instance=zookeeper-instance
 ```
 
-Note: If you are not passing any StorageClass it will use the default StorageClasss, Or you can pass the StorageClass using the command below:
+Note: In the demo cluster `openebs-hostpath` is set as the default storageclass. If it isn't, use the below command to explicitly set the same
 
 ```bash
-kubectl kudo install zookeeper --instance=zookeeper-instance -p STORAGE_CLASS=<STORAGE_CLASS_NAME>
+kubectl kudo install zookeeper --instance=zookeeper-instance -p STORAGE_CLASS=openebs-hostpath
 ```
 
 ### Install Kafka
@@ -53,10 +62,10 @@ kubectl kudo install zookeeper --instance=zookeeper-instance -p STORAGE_CLASS=<S
 kubectl kudo install kafka --instance=kafka
 ```
 
-Note: If you are not passing any StorageClass it will use the default StorageClasss, Or you can pass the StorageClass using the command below:
+Note: In the demo cluster `openebs-hostpath` is set as the default storageclass. If it isn't, use the below command to explicitly set the same
 
 ```bash
-kubectl kudo install kafka --instance=kafka -p STORAGE_CLASS=<STORAGE_CLASS_NAME>
+kubectl kudo install kafka --instance=kafka -p STORAGE_CLASS=openebs-hostpath
 ```
 
 ## Removing the Operator
