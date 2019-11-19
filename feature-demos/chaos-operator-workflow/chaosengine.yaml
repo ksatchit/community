@@ -1,17 +1,20 @@
+---
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: engine-nginx
+  name: chaos-nginx
 spec:
-  appinfo: 
+  monitoring: false
+  jobCleanUpPolicy: delete
+  appinfo:
     appns: default
-    applabel: "app=nginx"
+    applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx
   experiments:
-    - name: pod-delete 
+    - name: pod-delete
       spec:
-        components: 
-    - name: container-kill
-      spec:
-        components: 
+        components:
+          - name: FORCE
+            value: 'false'
+

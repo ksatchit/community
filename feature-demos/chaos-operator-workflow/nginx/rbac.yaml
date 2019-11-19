@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nginx
 ---
-kind: ClusterRole
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx
@@ -15,7 +15,7 @@ rules:
   resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec", "events", "chaosengines", "chaosexperiments", "chaosresults"]
   verbs: ["*"] 
 ---
-kind: ClusterRoleBinding
+kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx
@@ -24,7 +24,7 @@ subjects:
   name: nginx
   namespace: default
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: nginx
   apiGroup: rbac.authorization.k8s.io
 
