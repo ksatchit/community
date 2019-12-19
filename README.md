@@ -3,13 +3,13 @@ Repository that stores all community content, demo steps, meeting minutes &amp; 
 
 ## Weekly Sync Up Meeting
 
-Held every Tuesday 17:30 IST / 13:30 CEST
+Held on the third Wednesday of every month at 10:00 PM IST / 08:30 AM PST 
 
 Meeting Resources: 
 
-- [Google Hangout](https://meet.google.com/uvt-ozaw-bvp)
-- [Agenda & Meeting Notes](https://docs.google.com/document/d/1CK0TNH_1RXuYG-trfV7Al32UWXIjozNWyhfAWaJYJ1k/)
-- [Release Tracker](https://docs.google.com/spreadsheets/d/15svGB99bDcSTkwAYttH1QzP5WJSb-dFKbPzl-9WqmXM/)
+- [Zoom Meeting](https://zoom.us/j/884972195) (Meeting ID: 884 972 195)
+- [Agenda & Meeting Notes](https://hackmd.io/@YL6JTV4RS8uYhAnI8ya2_g/Litmus-Community-Sync-Up-Meeting-Notes/)
+- [Release Tracker](https://github.com/litmuschaos/litmus/projects)
 
 Please feel free to add your items to the agenda ahead of the next sync up meeting! 
 
@@ -21,5 +21,6 @@ Please feel free to add your items to the agenda ahead of the next sync up meeti
 
 - [Litmus Community Slack](https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN)
 - [Litmus Architecture](https://docs.litmuschaos.io/docs/architecture/)
+- [Litmus Youtube Channel](https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw)
 - [Litmus Usage Docs](https://docs.litmuschaos.io/docs/getstarted/)
 - [Litmus Developer Docs](https://docs.litmuschaos.io/docs/devguide/)
