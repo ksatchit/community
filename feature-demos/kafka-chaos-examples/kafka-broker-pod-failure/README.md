@@ -27,7 +27,7 @@ Notes:
 - Create the kafka cluster (in this example, lets use the namespace: default) 
 
   ```
-  helm install --name kafka cp-helm-charts/.
+  helm install kafka cp-helm-charts/.
   ```
 
 - Verify that the kafka-broker statefulset & zookeeper statefulset replicas are ready and available
@@ -95,12 +95,21 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
+  # It can be app/infra
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: 
   appinfo: 
     appns: default
     applabel: 'app=cp-kafka'
     appkind: statefulset
   chaosServiceAccount: kafka-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
     - name: kafka-broker-pod-failure
