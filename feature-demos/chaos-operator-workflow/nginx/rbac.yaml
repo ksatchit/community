@@ -2,29 +2,31 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx
+  name: nginx-sa
   labels:
-    app: nginx
+    app: nginx-sa
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx
+  name: nginx-sa
 rules:
-- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec", "events", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["*"] 
+- apiGroups: ["", "apps", "batch", "litmuschaos.io"]
+  resources: [deployments", "jobs", "pods", "configmaps", "chaosengines", "chaosexperiments", "chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx
+  name: nginx-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx
+  name: nginx-sa
   namespace: default
 roleRef:
   kind: Role
-  name: nginx
+  name: nginx-sa
   apiGroup: rbac.authorization.k8s.io
-

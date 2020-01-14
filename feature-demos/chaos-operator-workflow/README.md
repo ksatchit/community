@@ -87,24 +87,34 @@ metadata:
   version: 0.1.4
 spec:
   definition:
+    scope: Namespaced
     permissions:
-      apiGroups:
-        - ""
-        - "extensions"
-        - "apps"
-        - "batch"
-        - "litmuschaos.io"
-      resources:
-        - "daemonsets"
-        - "deployments"
-        - "statefulsets"
-        - "jobs"
-        - "pods"
-        - "chaosengines"
-        - "chaosexperiments"
-        - "chaosresults"
-      verbs:
-        - "*"
+      - apiGroups:
+          - ""
+          - "apps"
+          - "batch"
+          - "litmuschaos.io"
+        resources:
+          - "deployments"
+          - "jobs"
+          - "pods"
+          - "configmaps"
+          - "chaosengines"
+          - "chaosexperiments"
+          - "chaosresults"
+        verbs:
+          - "create"
+          - "list"
+          - "get"
+          - "patch"
+          - "delete"
+      - apiGroups:
+          - ""
+        resources: 
+          - "nodes"
+        verbs :
+          - "get"
+          - "list"
     image: "litmuschaos/ansible-runner:ci"
     args:
     - -c
@@ -163,7 +173,15 @@ kind: ChaosEngine
 metadata:
   name: chaos-nginx
 spec:
+  # It can be app/infra
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: 
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   jobCleanUpPolicy: delete
   appinfo: 
     appns: default
