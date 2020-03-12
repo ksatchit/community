@@ -1,4 +1,6 @@
 # Community
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flitmuschaos%2Fcommunity.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Flitmuschaos%2Fcommunity?ref=badge_shield)
+
 Repository that stores all community content, demo steps, meeting minutes &amp; contributor resources for Litmuschaos
 
 ## Weekly Sync Up Meeting
@@ -24,3 +26,7 @@ Please feel free to add your items to the agenda ahead of the next sync up meeti
 - [Litmus Youtube Channel](https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw)
 - [Litmus Usage Docs](https://docs.litmuschaos.io/docs/getstarted/)
 - [Litmus Developer Docs](https://docs.litmuschaos.io/docs/devguide/)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flitmuschaos%2Fcommunity.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Flitmuschaos%2Fcommunity?ref=badge_large)
